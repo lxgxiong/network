@@ -21,13 +21,16 @@ public class Sender {
 		this.window = new ArrayList<Integer>();
 		try {
 			this.sendSocket=new DatagramSocket(9877);
+			this.address=InetAddress.getByName("localhost");
 		} catch (SocketException e) {
+			e.printStackTrace();
+		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public void sendInitialPacket(){
-		String str = windowSize+","+maxSeq;
+		String str = windowSize+":"+maxSeq;
 		DatagramPacket sendPacket = new DatagramPacket(str.getBytes(),
 				str.getBytes().length, this.address, 9876);
 		
